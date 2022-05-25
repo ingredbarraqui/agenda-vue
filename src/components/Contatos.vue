@@ -1,0 +1,96 @@
+<template>
+    <table class="contato">
+      <thead>
+        <tr>
+          <th>Contato</th>
+          <th>Email</th>
+          <th>Telefone</th>
+          <th>Editar</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+      <ItemContato v-for="contato in listaContatos" :key="contato.nome" :contato=contato />
+    </table>
+</template>
+
+<script>
+import ItemContato from './ItemContato.vue'
+export default {
+    props: ["listaContatos"],
+    methods:{
+
+    },
+    components: {
+    ItemContato
+  },
+    created() {
+        console.log(this.listaContatos)
+    }
+}
+</script>
+
+<style scoped>
+.icone{
+    content: "";
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 25px;
+    color: #fff;
+    text-transform: uppercase;
+    margin-right: 10px;
+}
+
+.contato{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.contato tr{
+    border: solid 1px #e1e1e1;
+    background-color: #ffffff;
+}
+
+.contato th{
+    background: #fff;
+    color: #9198af;
+    font-weight: normal;
+    font-size: 0.813rem;
+    padding: 1rem;
+    text-align: initial;
+    width: 30%;
+}
+
+.contato td{
+    margin: 0.063rem 1rem 0;
+    padding: 1rem;
+    border: #e1e1e1;
+    color: #2a2d3b;
+}
+
+.contatos{
+    text-align: center;
+}
+
+.itemContato:not(:first-child):hover {
+    background: #fff3f2;
+}
+
+.itemContato.destaque {
+    background: #fff3f2;
+}
+
+.edit button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: -webkit-inline-box
+}
+
+</style>
