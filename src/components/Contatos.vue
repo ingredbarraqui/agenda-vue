@@ -10,7 +10,7 @@
       </thead>
       <tbody>
       </tbody>
-      <ItemContato v-for="contato in listaContatos" :key="contato.nome" :contato=contato />
+      <ItemContato v-for="contato in listaContatos" :key="contato.id" :contato=contato />
     </table>
 </template>
 
@@ -18,9 +18,6 @@
 import ItemContato from './ItemContato.vue'
 export default {
     props: ["listaContatos"],
-    methods:{
-
-    },
     components: {
     ItemContato
   },

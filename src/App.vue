@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <HeaderVue/>
-    <ModalForm :contato=contato />
+    <HeaderVue />
     <Contatos :listaContatos=listaContatos />
   </div>
 </template>
@@ -9,31 +8,80 @@
 <script>
 import HeaderVue from './components/HeaderVue.vue'
 import Contatos from './components/Contatos.vue'
-import ModalForm from './components/ModalForm.vue'
 
 export default {
   data(){
       return {
-         contato :{
-            nome: null,
-            email: null,
-            tel: null,
-         },
          listaContatos: this.listarContatos()
       }
    },
   components: {
     HeaderVue,
     Contatos,
-    ModalForm
   },
   methods:{
     listarContatos(){
-      return useLocalStorage("listaContatos", "")
-    }
-  },
-}
+      return useLocalStorage("listaContatos", [])
+    },
+    salvarContatos (key, valueToStore){
+      try {
+        if (typeof window !== "undefined") {
+          window.localStorage.setItem( key, JSON.stringify(valueToStore));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    salvarContato(contato, destaque = false){
+        let listaContatos = this.listarContatos()
 
+        if (listaContatos == null) {
+            listaContatos = []
+        }
+        console.log(contato.id)
+        if (contato.id > 0) {
+            contato.destaque = destaque;
+            let index = listaContatos.filter((key, item,) => {
+          return item.id == contato.id ? item : null;
+        });
+            listaContatos[index] = contato;
+        } else {
+            contato.id = this.ultimoId()+1
+            contato.destaque = true;
+            listaContatos.push(contato)
+            // setTimeout(() => {
+            //     editarDestaque((listaContatos.length - 1), false)
+            // }, "10000")
+        }
+        this.salvarContatos("listaContatos", listaContatos)
+    },
+    excluirContato(id){
+      let listaContatos = this.listarContatos()
+      listaContatos = listaContatos.filter((item) => {
+        return item.id != id ? item : null;
+      });
+      this.salvarContatos("listaContatos", listaContatos)
+    },
+
+    ultimoId(){
+      let listaContatos = this.listarContatos()
+      if(listaContatos.length == 0){
+        return 0
+      }
+      listaContatos.sort( compare );
+      return listaContatos[0].id
+    }
+  }
+}
+  function compare( a, b ) {
+  if ( a.id > b.id ){
+    return -1;
+  }
+  if ( a.id < b.id ){
+    return 1;
+  }
+  return 0;
+}
   const useLocalStorage = (key, initialValue) => {
 
     try {
@@ -42,18 +90,6 @@ export default {
     } catch (error) {
       console.log(error);
       return initialValue;
-    }
-  };
-
-  const setValue = (value) => {
-    try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
-      }
-    } catch (error) {
-      console.log(error);
     }
   };
 

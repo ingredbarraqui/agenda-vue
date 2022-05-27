@@ -4,10 +4,13 @@
           <td>{{contato.email}}</td>
           <td>{{contato.tel}}</td>
           <td class="edit">
-            <button type="button" data-toggle="modal" data-target="#ModalContato" :data-contato=contato ><img src="../assets/ic-edit.svg" /></button>
-            <button type="button" data-target="#exluir"><img src="../assets/ic-delete.svg"/></button>
+            <button type="button" data-toggle="modal" :data-target="'#ModalContato' + contato.id"><img src="../assets/ic-edit.svg" /></button>
+            <button type="button" data-toggle="modal" :data-target="'#ModalExcluir' + contato.id"><img src="../assets/ic-delete.svg"/></button>
+            <ModalExcluir :index=contato.id />
+            <ModalForm titulo="Editar contato" :contato=contato />
           </td>
         </tr>
+
 </template>
 
 <script>
@@ -26,8 +29,8 @@ export default {
 
     },
     components: {
+        ModalExcluir,
         ModalForm,
-        ModalExcluir
    },
 }
 </script>

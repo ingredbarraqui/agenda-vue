@@ -1,16 +1,12 @@
 <template>
-<div class="modal fade" id="ModalContato" aria-hidden="true">
+<div class="modal fade" :id="'ModalContato' + contato.id" aria-hidden="true" >
    <div class="modal-dialog">
-      <div class="modal-content">
-         <div>
-            <p>Modal title</p>
-         </div>
-         <div class="modal-body">
+      <p>{{titulo}}</p>
             <form  id="formEditar" @submit="handleSubmit">
                <div class="form">
-                  <label>{{contato}} Nome
+                  <label>Nome
                   <input
-                     value=""
+                     :value="contato.nome"
                      type="text"
                      name='nome'
                      placeholder='nome'
@@ -19,7 +15,7 @@
                   </label>
                   <label>E-mail
                   <input
-                     :value="email"
+                     :value="contato.email"
                      type="email"
                      name='email'
                      placeholder='email'
@@ -28,30 +24,29 @@
                   </label>
                   <label>Telefone
                   <input
-                     :value="tel"
+                     :value="contato.tel"
                      type="tel"
                      name='tel'
-                     mask="(99) 99999-9999"
+                     v-mask="'(##) #####-####'"
                      placeholder='Telefone'
                      required
                      />
                   </label>
                </div>
                <div class="btns-modal">
-                  <button type="button" class="cancelar">Cancelar</button>
+                  <button data-dismiss="modal" type="button" class="cancelar">Cancelar</button>
                   <button class="salvar">Salvar</button>
                </div>
             </form>
          </div>
-      </div>
    </div>
-</div>
 </template>
 
 <script>
+import AppVue from '../App.vue';
 
 export default {
-    props: ["contato"],
+    props: ["contato", "titulo"],
     data(){
       return{
           nome: null,
@@ -60,25 +55,26 @@ export default {
         }
     },
     methods:{
-    handleSubmit  (e, index) {
+    handleSubmit  (e) {
         e.preventDefault();
-        const nome = e.target.elements.nome.value;
-        const email = e.target.elements.email.value;
-        const tel = e.target.elements.tel.value;
-        console.log(nome, email, tel)
+        let contatoSalvar = {
+
+        }
+
+         if(this.contato.id !== 0){
+            contatoSalvar = this.contato
+         }
+
+         contatoSalvar.nome = e.target.elements.nome.value
+         contatoSalvar.email = e.target.elements.email.value
+         contatoSalvar.tel = e.target.elements.tel.value
+
+
+         AppVue.methods.salvarContato(contatoSalvar)
+        console.log(AppVue)
+
       }
     },
-    created(){
-      console.log(this.contato)
-      $('#ModalContato').on('show.bs.modal', function (e) {
-   // let button = $(e.relatedTarget)
-   // let contato = button.data('contato')
-   // let modal = $(this)
-
-//   modal.find('.modal-title').text('New message to ' + recipient)
-//   modal.find('.modal-body input').val(recipient)
-      })
-    }
 }
 
 
@@ -91,6 +87,7 @@ export default {
     display: table-caption;
     border-top: 1px solid #c0c3d2;
     border-bottom: 1px solid #c0c3d2;
+    padding: 1.2rem 0;
 }
 
 .form input{
@@ -102,13 +99,18 @@ export default {
     padding-left: 4px;
 }
 
-.modal {
-    width: 440px;
+.form label{
+   margin-bottom: none;
+}
+
+.modal-dialog {
+    width: 420px;
     background: #ffffff;
-    margin: 225px auto;
-    padding: 1rem 0;
+    margin: 165px auto;
+    padding: 1rem;
     border-radius: 16px;
     box-shadow: 0 16px 10px 0 rgba(0, 0, 0, 0.16);
+    pointer-events: auto;
 }
 
 .btns-modal{

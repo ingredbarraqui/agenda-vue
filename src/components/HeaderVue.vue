@@ -1,11 +1,10 @@
 <template>
    <header>
       <div class="header">
+         <div><img src="../assets/ic-logo.svg"></div>
          <div>
-            <img src="../assets/ic-logo.svg">
-         </div>
-         <div>
-            <button type="button" data-toggle="modal" data-target="#ModalContato"><i class="fa-solid fa-plus"></i>Criar contato</button>
+            <button type="button" data-toggle="modal" data-target="#ModalContato0"><i class="fa-solid fa-plus"></i>Criar contato</button>
+             <ModalForm titulo="Criar novo contato" :contato=contato />
          </div>
          <div class="search">
             <input type="text" placeholder='Buscar...' />
@@ -16,10 +15,21 @@
 </template>
 
 <script>
-
+import ModalForm from './ModalForm.vue'
 export default {
-
-   name: "HeaderVue",
+   data(){
+      return{
+            contato :{
+            nome: null,
+            email: null,
+            tel: null,
+            id: 0
+         },
+      }
+   },
+  components: {
+    ModalForm,
+  }
 }
 
 </script>
