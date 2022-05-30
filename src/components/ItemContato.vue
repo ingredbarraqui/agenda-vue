@@ -1,16 +1,15 @@
 <template>
-  <tr>
-          <td class="nome"><span className="icone">{{contato.nome}}</span></td>
-          <td>{{contato.email}}</td>
-          <td>{{contato.tel}}</td>
-          <td class="edit">
-            <button type="button" data-toggle="modal" :data-target="'#ModalContato' + contato.id"><img src="../assets/ic-edit.svg" /></button>
-            <button type="button" data-toggle="modal" :data-target="'#ModalExcluir' + contato.id"><img src="../assets/ic-delete.svg"/></button>
-            <ModalExcluir :index=contato.id />
-            <ModalForm titulo="Editar contato" :contato=contato />
-          </td>
-        </tr>
-
+  <tr :class=defineDestaque(contato)>
+    <td class="nome"><span className="icone">{{contato.nome}}</span></td>
+    <td>{{contato.email}}</td>
+    <td>{{contato.tel}}</td>
+    <td class="edit">
+    <button type="button" data-toggle="modal" :data-target="'#ModalContato' + contato.id"><img src="../assets/ic-edit.svg" /></button>
+    <button type="button" data-toggle="modal" :data-target="'#ModalExcluir' + contato.id"><img src="../assets/ic-delete.svg"/></button>
+    <ModalExcluir :index=contato.id />
+    <ModalForm titulo="Editar contato" :contato=contato />
+    </td>
+  </tr>
 </template>
 
 <script>
@@ -25,8 +24,13 @@ export default {
             tel: "null",
         }
     },
-    methods:{
-
+    methods: {
+        defineDestaque(contato) {
+          if (Date.parse(contato.destaqueAte) >= new Date()) {
+              return "destaque";
+          }
+          return "";
+        }
     },
     components: {
         ModalExcluir,
@@ -83,12 +87,12 @@ export default {
     text-align: center;
 }
 
-.itemContato:not(:first-child):hover {
-    background: #fff3f2;
+tr:not(:first-child):hover {
+    background-color: #fff3f2;
 }
 
-.itemContato.destaque {
-    background: #fff3f2;
+tr.destaque td {
+    background-color: #fff3f2;
 }
 
 .edit button{

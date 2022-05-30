@@ -37,19 +37,23 @@ export default {
 <style scoped>
 
 .header{
-    margin: 1rem;
+    margin: 1rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .header input{
-    width: 64.5rem;
+    width: 100%;
     border: none;
     padding: 0.438rem 0.5rem 0.375rem;
     border-radius: 4px;
     background-color: #e4e7f4;
     color: #9198af;
+}
+
+.search {
+    flex: 1;
 }
 
 ::placeholder {
@@ -63,10 +67,8 @@ export default {
     margin: 0 1.5rem 0 3.75rem;
     padding: 0.5rem 1.375rem 0.5rem 1rem;
     border-radius: 20px;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16);
     background-color: #dbff90;
     cursor: pointer;
-    display: block;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 0 0.5px rgba(0, 0, 0, 0.08), inset 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 2px 4px 0.5px rgba(0, 0, 0, 0.16);
 }
 

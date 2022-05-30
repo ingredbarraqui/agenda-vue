@@ -17,13 +17,10 @@
 <script>
 import ItemContato from './ItemContato.vue'
 export default {
-    props: ["listaContatos"],
-    components: {
+  props: ["listaContatos"],
+  components: {
     ItemContato
-  },
-    created() {
-        console.log(this.listaContatos)
-    }
+  }
 }
 </script>
 

@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import AppVue from '../App.vue';
 
 export default {
     props: ["contato", "titulo"],
@@ -56,23 +55,19 @@ export default {
     },
     methods:{
     handleSubmit  (e) {
-        e.preventDefault();
-        let contatoSalvar = {
-
-        }
-
+         e.preventDefault();
+         let contatoSalvar = {}
          if(this.contato.id !== 0){
             contatoSalvar = this.contato
          }
-
          contatoSalvar.nome = e.target.elements.nome.value
          contatoSalvar.email = e.target.elements.email.value
          contatoSalvar.tel = e.target.elements.tel.value
+         e.target.elements.nome.value = ""
+         e.target.elements.email.value = ""
+         e.target.elements.tel.value = ""
 
-
-         AppVue.methods.salvarContato(contatoSalvar)
-        console.log(AppVue)
-
+         this.$root.$children[0].salvarContato(contatoSalvar)
       }
     },
 }
@@ -82,7 +77,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
 .form{
     display: table-caption;
     border-top: 1px solid #c0c3d2;
