@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueMask from 'v-mask'
-
 Vue.config.productionTip = false
 Vue.use(VueMask);
 

@@ -1,12 +1,12 @@
 <template>
-  <div id="app">
-    <HeaderVue />
-    <Contatos v-if="this.listaContatos.length !== 0" :listaContatos=listaContatos />
-    <div  v-else class="contatoNull">
-      <img src="./assets/ic-book.svg" />
-      <p>Nenhum contato foi criado ainda.</p>
-    </div>
-  </div>
+   <div id="app">
+      <HeaderVue />
+      <Contatos v-if="this.listaContatos.length !== 0" :listaContatos=listaContatos />
+      <div  v-else class="contatoNull">
+         <img src="./assets/ic-book.svg" />
+         <p>Nenhum contato foi criado ainda.</p>
+      </div>
+   </div>
 </template>
 
 <script>
@@ -35,8 +35,8 @@ export default {
       }
     }
   },
-  methods: {
 
+  methods: {
     salvarContato(contato){
 
       let data = new Date();
@@ -48,7 +48,6 @@ export default {
           return item.id == key ? key : null;
         });
         this.listaContatos[index] = contato;
-
       } else {
         contato.id = this.ultimoId()+1
         this.listaContatos.push(contato)
@@ -93,7 +92,6 @@ export default {
   }
 }
 
-
 function compare( a, b ) {
   if (a.id > b.id){
     return -1;
@@ -103,15 +101,9 @@ function compare( a, b ) {
   }
   return 0;
 }
-
 </script>
 
 <style>
-body, ul, li, dt, dd, dl {
-    margin: 16px !important;
-    font-family: 'Roboto', sans-serif !important;
-    background: #f8f9fd !important;
-}
 .contatoNull {
     text-align: center;
     padding-top: 6rem;

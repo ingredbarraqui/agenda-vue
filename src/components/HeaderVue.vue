@@ -4,7 +4,7 @@
          <div><img src="../assets/ic-logo.svg"></div>
          <div>
             <button type="button" data-toggle="modal" data-target="#ModalContato0"><i class="fa-solid fa-plus"></i>Criar contato</button>
-             <ModalForm titulo="Criar novo contato" :contato=contato />
+            <ModalForm titulo="Criar novo contato" :contato=contato />
          </div>
          <div class="search">
             <input type="text" placeholder='Buscar...' />
@@ -16,9 +16,10 @@
 
 <script>
 import ModalForm from './ModalForm.vue'
+
 export default {
    data(){
-      return{
+        return{
             contato :{
             nome: null,
             email: null,
@@ -31,11 +32,9 @@ export default {
     ModalForm,
   }
 }
-
 </script>
 
 <style scoped>
-
 .header{
     margin: 1rem 0;
     display: flex;
@@ -87,5 +86,4 @@ export default {
     margin: 0 7.75rem 0.781rem 1rem;
     color: #2a2d3b;
 }
-
 </style>

@@ -1,23 +1,26 @@
 <template>
-    <table class="contato">
+   <table class="contato">
       <thead>
-        <tr>
-          <th>Contato</th>
-          <th>Email</th>
-          <th>Telefone</th>
-          <th>Editar</th>
-        </tr>
+         <tr>
+            <th>Contato</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Editar</th>
+         </tr>
       </thead>
       <tbody>
+        <ItemContato v-for="contato in listaContatos" :key="contato.id" :contato=contato />
       </tbody>
-      <ItemContato v-for="contato in listaContatos" :key="contato.id" :contato=contato />
-    </table>
+   </table>
 </template>
 
 <script>
 import ItemContato from './ItemContato.vue'
+
 export default {
-  props: ["listaContatos"],
+  props: [
+    "listaContatos"
+  ],
   components: {
     ItemContato
   }
@@ -86,5 +89,4 @@ export default {
     cursor: pointer;
     display: -webkit-inline-box
 }
-
 </style>

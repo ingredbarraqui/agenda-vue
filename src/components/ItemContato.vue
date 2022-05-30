@@ -1,22 +1,35 @@
 <template>
-  <tr :class=defineDestaque(contato)>
-    <td class="nome"><span className="icone">{{contato.nome}}</span></td>
-    <td>{{contato.email}}</td>
-    <td>{{contato.tel}}</td>
-    <td class="edit">
-    <button type="button" data-toggle="modal" :data-target="'#ModalContato' + contato.id"><img src="../assets/ic-edit.svg" /></button>
-    <button type="button" data-toggle="modal" :data-target="'#ModalExcluir' + contato.id"><img src="../assets/ic-delete.svg"/></button>
-    <ModalExcluir :index=contato.id />
-    <ModalForm titulo="Editar contato" :contato=contato />
-    </td>
-  </tr>
+   <tr :class=defineDestaque(contato)>
+      <td class="nome">
+        <span class="icone" :style="{backgroundColor:corIcone(contato.nome[0])}">
+            {{contato.nome[0]}}
+        </span>{{contato.nome}}
+      </td>
+      <td>{{contato.email}}</td>
+      <td>{{contato.tel}}</td>
+      <td class="edit">
+         <button type="button" data-toggle="modal" :data-target="'#ModalContato' + contato.id"><img src="../assets/ic-edit.svg" /></button>
+         <button type="button" data-toggle="modal" :data-target="'#ModalExcluir' + contato.id"><img src="../assets/ic-delete.svg"/></button>
+         <ModalExcluir :index=contato.id />
+         <ModalForm titulo="Editar contato" :contato=contato />
+      </td>
+   </tr>
 </template>
 
 <script>
 import ModalForm from './ModalForm.vue'
 import ModalExcluir from './ModalExcluir.vue'
+
 export default {
-    props: ["contato"],
+    props: [
+        "contato"
+    ],
+
+    components: {
+        ModalExcluir,
+        ModalForm,
+   },
+
     data(){
         return{
             nome: "null",
@@ -24,18 +37,24 @@ export default {
             tel: "null",
         }
     },
+
     methods: {
         defineDestaque(contato) {
-          if (Date.parse(contato.destaqueAte) >= new Date()) {
-              return "destaque";
+            if (Date.parse(contato.destaqueAte) >= new Date()) {
+                return "destaque";
           }
-          return "";
+            return "";
+        },
+
+        corIcone(letra){
+            if(typeof letra !== "string"){
+                return "#fff"
+            }
+
+            var hue = Math.floor((letra.toLowerCase().charCodeAt()-96)/26*360);
+            return "hsl(" + hue + ", 100%, 70%)";
         }
     },
-    components: {
-        ModalExcluir,
-        ModalForm,
-   },
 }
 </script>
 
@@ -101,5 +120,4 @@ tr.destaque td {
     cursor: pointer;
     display: -webkit-inline-box
 }
-
 </style>

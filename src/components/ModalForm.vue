@@ -2,40 +2,45 @@
 <div class="modal fade" :id="'ModalContato' + contato.id" aria-hidden="true" >
    <div class="modal-dialog">
       <p>{{titulo}}</p>
-            <form  id="formEditar" @submit="handleSubmit">
+            <form  :id="'formEditar' + contato.id" @submit="handleSubmit">
                <div class="form">
                   <label>Nome
                   <input
                      :value="contato.nome"
                      type="text"
                      name='nome'
-                     placeholder='nome'
+                     placeholder='Nome'
+                     @keyup="habilitado()"
                      required
                      />
                   </label>
+
                   <label>E-mail
                   <input
                      :value="contato.email"
                      type="email"
                      name='email'
-                     placeholder='email'
+                     placeholder='Email'
+                     @keyup="habilitado()"
                      required
                      />
                   </label>
+
                   <label>Telefone
-                  <input
+                  <the-mask
                      :value="contato.tel"
-                     type="tel"
                      name='tel'
-                     v-mask="'(##) #####-####'"
                      placeholder='Telefone'
+                     @keyup.native="habilitado()"
+                     :mask="['(##) ####-####', '(##) #####-####']"
                      required
                      />
                   </label>
                </div>
+
                <div class="btns-modal">
                   <button data-dismiss="modal" type="button" class="cancelar">Cancelar</button>
-                  <button class="salvar">Salvar</button>
+                  <button data-dismiss="modal" :disabled=disabled @click="handleSubmit" class="salvar">Salvar</button>
                </div>
             </form>
          </div>
@@ -43,38 +48,60 @@
 </template>
 
 <script>
-
+import {TheMask} from 'vue-the-mask'
 export default {
-    props: ["contato", "titulo"],
-    data(){
+   props: [
+      "contato",
+      "titulo"
+      ],
+
+   components: {
+      TheMask
+      },
+
+   data(){
       return{
-          nome: null,
-          email: null,
-          tel: null,
-        }
-    },
-    methods:{
-    handleSubmit  (e) {
+         nome: null,
+         email: null,
+         tel: null,
+         disabled: true
+      }
+   },
+
+   methods:{
+      handleSubmit(e){
          e.preventDefault();
          let contatoSalvar = {}
+
          if(this.contato.id !== 0){
             contatoSalvar = this.contato
          }
-         contatoSalvar.nome = e.target.elements.nome.value
-         contatoSalvar.email = e.target.elements.email.value
-         contatoSalvar.tel = e.target.elements.tel.value
-         e.target.elements.nome.value = ""
-         e.target.elements.email.value = ""
-         e.target.elements.tel.value = ""
+
+         let form = document.querySelector("#formEditar" + this.contato.id).elements
+         contatoSalvar.nome = form.nome.value
+         contatoSalvar.email = form.email.value
+         contatoSalvar.tel = form.tel.value
+         form.nome.value = ""
+         form.email.value = ""
+         form.tel.value = ""
 
          this.$root.$children[0].salvarContato(contatoSalvar)
+      },
+
+      habilitado(){
+         let form = document.querySelector("#formEditar" + this.contato.id).elements
+         this.contato.nome = form.nome.value
+         this.contato.email = form.email.value
+         this.contato.tel = form.tel.value
+
+         if(form.nome.value !== "" && form.email.value !== "" && form.tel.value !== "" ){
+            this.disabled = false
+         } else {
+           this.disabled = true
+         }
       }
     },
 }
-
-
-
-
 </script>
 
 <style>
@@ -134,10 +161,8 @@ export default {
   background-color: #fa7268;
 }
 
-.btns-modal input:disabled {
+.btns-modal button:disabled {
     background-color: #fa7268;
     opacity: 0.32;
   }
-
-
 </style>
